@@ -1,0 +1,21 @@
+# documents.csr -- document registry index
+#
+# Append one `document <Name>:` block per document. Minimal entry:
+#
+#   document MyDoc:
+#     id: csr.document.MyDoc
+#
+#     document_class: framework        # see CLAUDE.md for class taxonomy
+#     namespace: MyDoc                 # namespace for this doc's symbols
+#     display_name: "My document"
+#     version: v0
+#     status: candidate                # draft | candidate | provisional | canonical | deprecated | rejected | deferred
+#     source_path: relative/path/to/source.tex
+#     defines: []
+#     publication_mode: internal       # internal | external
+#     last_verified: YYYY-MM-DD
+#
+# A document with no source_path triggers CSR023; declare one if the source
+# file exists.
+
+
