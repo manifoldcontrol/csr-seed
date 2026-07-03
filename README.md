@@ -9,6 +9,10 @@ vocabulary: research frameworks, spec-driven codebases, long-lived design
 docs. The registry compiles to a lockfile, a browsable wiki, a dependency
 graph, and a validation report with 20+ typed error codes.
 
+## Requirements
+
+Python 3.9+ and PyYAML (`pip install pyyaml`). Nothing else.
+
 ## The 60-second demo
 
 The `examples/relay/` corpus is a small API project: an auth design doc, an
