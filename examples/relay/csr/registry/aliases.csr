@@ -1,0 +1,9 @@
+# aliases.csr -- declared alias relationships
+#
+# Use sparingly. Aliases assert that two ids refer to the same object.
+#
+#   alias my_alias:
+#     id: csr.<Namespace>.my_alias
+#     aliases_for: csr.<Namespace>.canonical_symbol
+
+alias csr.Auth.api_key -> csr.Auth.access_token

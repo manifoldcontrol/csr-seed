@@ -1,0 +1,198 @@
+# Relay.csr -- symbols for the Relay example corpus (namespaces Auth, Api)
+
+symbol session:
+  id: csr.Auth.session
+  namespace: Auth
+  framework_layer: domain
+  owning_document: csr.document.Auth_Design
+  display_name: "session"
+  type: concept
+  status: canonical
+  definition_home: csr.document.Auth_Design@v1#section.1.session
+  definition: "Server-side record binding one client to one scope set for a bounded lifetime. Sole bearer of authenticated identity."
+  definition_hash: auto
+  source_anchor:
+    document: csr.document.Auth_Design
+    version: v1
+    section: "1"
+    anchor: session
+    source_hash: sha256:6dfd2f3e798e06b3870e3015d828affe1988447bc17d9aba1e5940f0a115dde6
+    section_hash: sha256:6dfd2f3e798e06b3870e3015d828affe1988447bc17d9aba1e5940f0a115dde6
+  verification:
+    state: tested
+    method: empirical
+    last_verified: 2026-07-02
+
+symbol access_token:
+  id: csr.Auth.access_token
+  namespace: Auth
+  framework_layer: domain
+  owning_document: csr.document.Auth_Design
+  display_name: "access_token"
+  type: concept
+  status: provisional
+  definition_home: csr.document.Auth_Design@v1#section.2.access_token
+  definition: "Bearer credential exchanged for a session. Opaque, 32 bytes, 24h rotation. Renamed from api_key in v1."
+  definition_hash: auto
+  source_anchor:
+    document: csr.document.Auth_Design
+    version: v1
+    section: "2"
+    anchor: access_token
+    source_hash: sha256:6dfd2f3e798e06b3870e3015d828affe1988447bc17d9aba1e5940f0a115dde6
+    section_hash: sha256:6dfd2f3e798e06b3870e3015d828affe1988447bc17d9aba1e5940f0a115dde6
+  verification:
+    state: argued
+    method: prose
+    last_verified: 2026-07-02
+
+symbol scope:
+  id: csr.Auth.scope
+  namespace: Auth
+  framework_layer: domain
+  owning_document: csr.document.Auth_Design
+  display_name: "scope"
+  type: concept
+  status: candidate
+  definition_home: csr.document.Auth_Design@v1#section.3.scope
+  definition: "Named capability grant attached to a session; enforced by the gateway before dispatch."
+  definition_hash: auto
+  source_anchor:
+    document: csr.document.Auth_Design
+    version: v1
+    section: "3"
+    anchor: scope
+    source_hash: sha256:6dfd2f3e798e06b3870e3015d828affe1988447bc17d9aba1e5940f0a115dde6
+    section_hash: sha256:6dfd2f3e798e06b3870e3015d828affe1988447bc17d9aba1e5940f0a115dde6
+  relations:
+    depends_on:
+      - csr.Auth.session
+  verification:
+    state: declared
+    method: prose
+    last_verified: 2026-07-02
+
+symbol rate_limit:
+  id: csr.Api.rate_limit
+  namespace: Api
+  framework_layer: domain
+  owning_document: csr.document.Api_Spec
+  display_name: "rate_limit"
+  type: schema
+  status: provisional
+  definition_home: csr.document.Api_Spec@v1#section.1.rate_limit
+  definition: "Per-access_token request budget: 600/min rolling; 429 + Retry-After on excess."
+  definition_hash: auto
+  source_anchor:
+    document: csr.document.Api_Spec
+    version: v1
+    section: "1"
+    anchor: rate_limit
+    source_hash: sha256:10c6bb0b2f107924f19e97b8156d6517807c40bcd807d4791dc885beae397d14
+    section_hash: sha256:10c6bb0b2f107924f19e97b8156d6517807c40bcd807d4791dc885beae397d14
+  relations:
+    depends_on:
+      - csr.Auth.access_token
+  verification:
+    state: tested
+    method: empirical
+    last_verified: 2026-07-02
+
+symbol idempotency_key:
+  id: csr.Api.idempotency_key
+  namespace: Api
+  framework_layer: domain
+  owning_document: csr.document.Api_Spec
+  display_name: "idempotency_key"
+  type: concept
+  status: candidate
+  definition_home: csr.document.Api_Spec@v1#section.2.idempotency_key
+  definition: "Client-supplied unique key on mutating requests; replays return the original result."
+  definition_hash: auto
+  source_anchor:
+    document: csr.document.Api_Spec
+    version: v1
+    section: "2"
+    anchor: idempotency_key
+    source_hash: sha256:10c6bb0b2f107924f19e97b8156d6517807c40bcd807d4791dc885beae397d14
+    section_hash: sha256:10c6bb0b2f107924f19e97b8156d6517807c40bcd807d4791dc885beae397d14
+  verification:
+    state: argued
+    method: prose
+    last_verified: 2026-07-02
+
+symbol pagination_cursor:
+  id: csr.Api.pagination_cursor
+  namespace: Api
+  framework_layer: representation
+  owning_document: csr.document.Api_Spec
+  display_name: "pagination_cursor"
+  type: concept
+  status: candidate
+  definition_home: csr.document.Api_Spec@v1#section.3.pagination_cursor
+  definition: "Opaque continuation token in list responses; stable across inserts."
+  definition_hash: auto
+  source_anchor:
+    document: csr.document.Api_Spec
+    version: v1
+    section: "3"
+    anchor: pagination_cursor
+    source_hash: sha256:10c6bb0b2f107924f19e97b8156d6517807c40bcd807d4791dc885beae397d14
+    section_hash: sha256:10c6bb0b2f107924f19e97b8156d6517807c40bcd807d4791dc885beae397d14
+  verification:
+    state: declared
+    method: prose
+    last_verified: 2026-07-02
+
+symbol webhook:
+  id: csr.Api.webhook
+  namespace: Api
+  framework_layer: procedure
+  owning_document: csr.document.Api_Spec
+  display_name: "webhook"
+  type: structure
+  status: provisional
+  definition_home: csr.document.Api_Spec@v1#section.4.webhook
+  definition: "Signed POST to a subscriber URL on an event; at-least-once delivery, dedup via idempotency_key."
+  definition_hash: auto
+  source_anchor:
+    document: csr.document.Api_Spec
+    version: v1
+    section: "4"
+    anchor: webhook
+    source_hash: sha256:10c6bb0b2f107924f19e97b8156d6517807c40bcd807d4791dc885beae397d14
+    section_hash: sha256:10c6bb0b2f107924f19e97b8156d6517807c40bcd807d4791dc885beae397d14
+  relations:
+    depends_on:
+      - csr.Api.idempotency_key
+      - csr.Auth.session
+  verification:
+    state: tested
+    method: empirical
+    last_verified: 2026-07-02
+
+symbol session_api:
+  id: csr.Api.session
+  namespace: Api
+  framework_layer: domain
+  owning_document: csr.document.Api_Spec
+  display_name: "session (superseded TCP sense)"
+  type: concept
+  status: deprecated
+  definition_home: csr.document.Api_Spec@v1#section.5.session
+  definition: "Superseded: earlier draft sense of session as the TCP keep-alive window. Collided with the auth sense; auth definition is canonical."
+  definition_hash: auto
+  source_anchor:
+    document: csr.document.Api_Spec
+    version: v1
+    section: "5"
+    anchor: session
+    source_hash: sha256:10c6bb0b2f107924f19e97b8156d6517807c40bcd807d4791dc885beae397d14
+    section_hash: sha256:10c6bb0b2f107924f19e97b8156d6517807c40bcd807d4791dc885beae397d14
+  relations:
+    superseded_by:
+      - csr.Auth.session
+  verification:
+    state: declared
+    method: prose
+    last_verified: 2026-07-02
