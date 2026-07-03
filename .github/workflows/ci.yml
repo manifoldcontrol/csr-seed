@@ -1,0 +1,28 @@
+name: ci
+on:
+  push: { branches: [main] }
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: unit tests
+        run: python3 tests/test_csr_compile.py
+      - name: blank seed builds clean
+        run: |
+          python3 tools/csr.py build
+          grep -q "Errors: 0" build/CSR.validation.txt
+      - name: examples build clean
+        run: |
+          python3 tools/csr.py --root examples/relay/csr build
+          grep -q "Errors: 0, Warnings: 0" examples/relay/csr/build/CSR.validation.txt
+          python3 tools/csr.py --root examples/gambit/csr build
+          grep -q "Errors: 0, Warnings: 0" examples/gambit/csr/build/CSR.validation.txt
+      - name: drift detection fires (the demo is real)
+        run: |
+          echo >> examples/relay/docs/auth_design_v1.md
+          python3 tools/csr.py --root examples/relay/csr build
+          test "$(grep -c CSR004 examples/relay/csr/build/CSR.validation.txt)" -ge 1
