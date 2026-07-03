@@ -1,0 +1,4 @@
+build/
+examples/*/csr/build/
+__pycache__/
+*.pyc
