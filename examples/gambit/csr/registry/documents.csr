@@ -1,0 +1,53 @@
+# documents.csr -- document registry index
+#
+# Append one `document <Name>:` block per document. Minimal entry:
+#
+#   document MyDoc:
+#     id: csr.document.MyDoc
+#
+#     document_class: framework        # see CLAUDE.md for class taxonomy
+#     namespace: MyDoc                 # namespace for this doc's symbols
+#     display_name: "My document"
+#     version: v0
+#     status: candidate                # draft | candidate | provisional | canonical | deprecated | rejected | deferred
+#     source_path: relative/path/to/source.tex
+#     defines: []
+#     publication_mode: internal       # internal | external
+#     last_verified: YYYY-MM-DD
+#
+# A document with no source_path triggers CSR023; declare one if the source
+# file exists.
+
+
+
+document Rulebook:
+  id: csr.document.Rulebook
+  document_class: framework
+  namespace: Rules
+  display_name: "Gambit rulebook"
+  version: v2
+  status: canonical
+  source_path: docs/rulebook_v2.md
+  defines:
+    - csr.Rules.meld
+    - csr.Rules.trick
+    - csr.Rules.capture
+    - csr.Rules.sequence
+    - csr.Rules.scoring
+  publication_mode: internal
+  last_verified: 2026-07-02
+
+document Engine_Notes:
+  id: csr.document.Engine_Notes
+  document_class: framework
+  namespace: Engine
+  display_name: "Engine implementation notes"
+  version: v1
+  status: candidate
+  source_path: docs/engine_notes_v1.md
+  defines:
+    - csr.Engine.turn_order
+    - csr.Engine.shuffle
+    - csr.Engine.capture
+  publication_mode: internal
+  last_verified: 2026-07-02

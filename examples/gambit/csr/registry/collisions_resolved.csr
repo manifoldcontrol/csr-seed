@@ -1,0 +1,22 @@
+# collisions_resolved.csr -- resolved name/concept collisions
+#
+# Document collisions explicitly when two candidate symbols claim
+# overlapping concepts.
+#
+#   collision my_collision:
+#     id: csr.collision.my_collision
+#     status: resolved
+#     resolution: alias | merge | split | subset_with_added_structure
+#     entries: [csr.X.foo, csr.Y.foo]
+#     owner: <Namespace>
+#     resolved_at: <Doc>_v1
+#     note: "..."
+
+collision capture_rules_vs_engine:
+  id: csr.collision.capture_rules_vs_engine
+  status: resolved
+  resolution: subset_with_added_structure
+  entries: [csr.Rules.capture, csr.Engine.capture]
+  owner: Rules
+  resolved_at: Rulebook_v2
+  note: "Engine used 'capture' for any table removal incl. discards; rulebook sense (trick -> score pile) is canonical. Engine sense deprecated, code renamed to take_to_pile."

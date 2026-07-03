@@ -1,0 +1,198 @@
+# Gambit.csr -- symbols for the Gambit example corpus (namespaces Rules, Engine)
+
+symbol meld:
+  id: csr.Rules.meld
+  namespace: Rules
+  framework_layer: domain
+  owning_document: csr.document.Rulebook
+  display_name: "meld"
+  type: concept
+  status: provisional
+  definition_home: csr.document.Rulebook@v2#section.1.meld
+  definition: "Face-up set of three or more cards of one rank laid from the hand; frozen once laid; scores at end of round."
+  definition_hash: auto
+  source_anchor:
+    document: csr.document.Rulebook
+    version: v2
+    section: "1"
+    anchor: meld
+    source_hash: sha256:8fac55fa585da8e7d550d61d54b2bbfb7b040412faa8efd725f68741c3801d8b
+    section_hash: sha256:8fac55fa585da8e7d550d61d54b2bbfb7b040412faa8efd725f68741c3801d8b
+  verification:
+    state: argued
+    method: prose
+    last_verified: 2026-07-02
+
+symbol trick:
+  id: csr.Rules.trick
+  namespace: Rules
+  framework_layer: domain
+  owning_document: csr.document.Rulebook
+  display_name: "trick"
+  type: concept
+  status: candidate
+  definition_home: csr.document.Rulebook@v2#section.2.trick
+  definition: "One card from each player in turn order; highest of the led suit wins unless trumped."
+  definition_hash: auto
+  source_anchor:
+    document: csr.document.Rulebook
+    version: v2
+    section: "2"
+    anchor: trick
+    source_hash: sha256:8fac55fa585da8e7d550d61d54b2bbfb7b040412faa8efd725f68741c3801d8b
+    section_hash: sha256:8fac55fa585da8e7d550d61d54b2bbfb7b040412faa8efd725f68741c3801d8b
+  verification:
+    state: declared
+    method: prose
+    last_verified: 2026-07-02
+
+symbol capture:
+  id: csr.Rules.capture
+  namespace: Rules
+  framework_layer: domain
+  owning_document: csr.document.Rulebook
+  display_name: "capture"
+  type: concept
+  status: canonical
+  definition_home: csr.document.Rulebook@v2#section.3.capture
+  definition: "Taking the trick's cards face-down into the score pile. v2: captured cards may not be inspected."
+  definition_hash: auto
+  source_anchor:
+    document: csr.document.Rulebook
+    version: v2
+    section: "3"
+    anchor: capture
+    source_hash: sha256:8fac55fa585da8e7d550d61d54b2bbfb7b040412faa8efd725f68741c3801d8b
+    section_hash: sha256:8fac55fa585da8e7d550d61d54b2bbfb7b040412faa8efd725f68741c3801d8b
+  relations:
+    depends_on:
+      - csr.Rules.trick
+  verification:
+    state: tested
+    method: simulation
+    last_verified: 2026-07-02
+
+symbol sequence:
+  id: csr.Rules.sequence
+  namespace: Rules
+  framework_layer: domain
+  owning_document: csr.document.Rulebook
+  display_name: "sequence"
+  type: concept
+  status: provisional
+  definition_home: csr.document.Rulebook@v2#section.4.sequence
+  definition: "Three or more consecutive ranks of one suit. Renamed from 'run' in v2."
+  definition_hash: auto
+  source_anchor:
+    document: csr.document.Rulebook
+    version: v2
+    section: "4"
+    anchor: sequence
+    source_hash: sha256:8fac55fa585da8e7d550d61d54b2bbfb7b040412faa8efd725f68741c3801d8b
+    section_hash: sha256:8fac55fa585da8e7d550d61d54b2bbfb7b040412faa8efd725f68741c3801d8b
+  verification:
+    state: argued
+    method: prose
+    last_verified: 2026-07-02
+
+symbol scoring:
+  id: csr.Rules.scoring
+  namespace: Rules
+  framework_layer: representation
+  owning_document: csr.document.Rulebook
+  display_name: "scoring"
+  type: schema
+  status: candidate
+  definition_home: csr.document.Rulebook@v2#section.5.scoring
+  definition: "Round score = melds + captured counters - deadwood; match to 500."
+  definition_hash: auto
+  source_anchor:
+    document: csr.document.Rulebook
+    version: v2
+    section: "5"
+    anchor: scoring
+    source_hash: sha256:8fac55fa585da8e7d550d61d54b2bbfb7b040412faa8efd725f68741c3801d8b
+    section_hash: sha256:8fac55fa585da8e7d550d61d54b2bbfb7b040412faa8efd725f68741c3801d8b
+  relations:
+    depends_on:
+      - csr.Rules.meld
+      - csr.Rules.capture
+  verification:
+    state: argued
+    method: prose
+    last_verified: 2026-07-02
+
+symbol turn_order:
+  id: csr.Engine.turn_order
+  namespace: Engine
+  framework_layer: procedure
+  owning_document: csr.document.Engine_Notes
+  display_name: "turn_order"
+  type: operator
+  status: provisional
+  definition_home: csr.document.Engine_Notes@v1#section.1.turn_order
+  definition: "Rotating ring seeded by the dealer button; advanced after every resolved trick."
+  definition_hash: auto
+  source_anchor:
+    document: csr.document.Engine_Notes
+    version: v1
+    section: "1"
+    anchor: turn_order
+    source_hash: sha256:05ce930f6e92a737a062a7be75faae51e1a4fbc76b22e552c5741b12c54b2757
+    section_hash: sha256:05ce930f6e92a737a062a7be75faae51e1a4fbc76b22e552c5741b12c54b2757
+  relations:
+    depends_on:
+      - csr.Rules.trick
+  verification:
+    state: tested
+    method: compiler_check
+    last_verified: 2026-07-02
+
+symbol shuffle:
+  id: csr.Engine.shuffle
+  namespace: Engine
+  framework_layer: procedure
+  owning_document: csr.document.Engine_Notes
+  display_name: "shuffle"
+  type: operator
+  status: candidate
+  definition_home: csr.document.Engine_Notes@v1#section.2.shuffle
+  definition: "Fisher-Yates over a seeded PRNG; deterministic replay per match id."
+  definition_hash: auto
+  source_anchor:
+    document: csr.document.Engine_Notes
+    version: v1
+    section: "2"
+    anchor: shuffle
+    source_hash: sha256:05ce930f6e92a737a062a7be75faae51e1a4fbc76b22e552c5741b12c54b2757
+    section_hash: sha256:05ce930f6e92a737a062a7be75faae51e1a4fbc76b22e552c5741b12c54b2757
+  verification:
+    state: tested
+    method: empirical
+    last_verified: 2026-07-02
+
+symbol capture_engine:
+  id: csr.Engine.capture
+  namespace: Engine
+  framework_layer: procedure
+  owning_document: csr.document.Engine_Notes
+  display_name: "capture (superseded engine sense)"
+  type: operator
+  status: deprecated
+  definition_home: csr.document.Engine_Notes@v1#section.3.capture
+  definition: "Superseded: removing any card from the table including discards. Collided with the rulebook capture; code now says take_to_pile."
+  definition_hash: auto
+  source_anchor:
+    document: csr.document.Engine_Notes
+    version: v1
+    section: "3"
+    anchor: capture
+    source_hash: sha256:05ce930f6e92a737a062a7be75faae51e1a4fbc76b22e552c5741b12c54b2757
+    section_hash: sha256:05ce930f6e92a737a062a7be75faae51e1a4fbc76b22e552c5741b12c54b2757
+  relations:
+    superseded_by:
+      - csr.Rules.capture
+  verification:
+    state: declared
+    method: prose
+    last_verified: 2026-07-02
