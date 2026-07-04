@@ -3,6 +3,8 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    - cron: "17 6 * * 1"   # weekly rebuild so aggregated registries from other repos stay fresh
 permissions:
   contents: read
   pages: write
@@ -19,15 +21,23 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install pyyaml
-      - name: build example registries and assemble the site
+      - name: build all registries and assemble the site
         run: |
-          mkdir -p _site/relay _site/gambit
+          mkdir -p _site/relay _site/gambit _site/fold
           cp pages/index.html _site/index.html
           touch _site/.nojekyll
+
+          # this repo's two worked examples
           python3 tools/csr.py --root examples/relay/csr build
           cp examples/relay/csr/build/CSR.registry.html _site/relay/index.html
           python3 tools/csr.py --root examples/gambit/csr build
           cp examples/gambit/csr/build/CSR.registry.html _site/gambit/index.html
+
+          # the real-world instance: the fold preprint's claim registry, from its own public repo
+          git clone --depth 1 https://github.com/manifoldcontrol/fold-registry _fold
+          python3 _fold/csr/tools/csr.py --root _fold/csr build
+          cp _fold/csr/build/CSR.registry.html _site/fold/index.html
+          cp _fold/docs/Fold_Bifurcation_v67.pdf _site/fold/paper.pdf
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
