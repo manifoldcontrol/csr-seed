@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>csr-seed — live registries</title>
+<title>csr — live registries</title>
 <style>
   :root { color-scheme: light dark; }
   body { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -19,23 +19,29 @@
   @media (prefers-color-scheme: light) { .card { border-color: #d0d7de; } }
   .card h2 { font-size: 1.05rem; font-weight: 500; margin: 0 0 .35rem; }
   .card p { margin: .35rem 0; color: #8b949e; font-size: .92rem; }
+  .tag { font-size: .72rem; color: #8b949e; border: 1px solid #30363d; border-radius: 999px; padding: .05rem .5rem; margin-left: .4rem; }
   code { background: rgba(110,118,129,.2); padding: .1rem .3rem; border-radius: 4px; font-size: .88rem; }
   footer { color: #8b949e; font-size: .85rem; margin-top: 2rem; }
 </style>
 </head>
 <body>
-  <h1>csr-seed</h1>
+  <h1>csr</h1>
   <p class="sub">a corpus semantic registry: documents define, the registry identifies, with hash-pinned drift detection.</p>
 
-  <p>two example corpora, compiled and rendered. each is a browsable registry: symbols, definition homes, dependency edges, verification states, and the collisions and aliases the registry resolves.</p>
+  <p>three registries, compiled from source and rendered. each is a browsable index: symbols, definition homes, dependency edges, verification states, and the collisions and aliases the registry resolves.</p>
 
   <div class="card">
-    <h2><a href="./relay/">relay — an api project</a></h2>
+    <h2><a href="./fold/">fold <span class="tag">real paper</span></a></h2>
+    <p>the claim-status table of a singular fold model preprint (v67), maintained as a registry: 8 proved results, 1 conditional, 4 open problems, with dependency edges and sha256 pins against the <a href="./fold/paper.pdf">paper</a>. change a byte of the pdf and every affected claim is flagged until re-verified.</p>
+  </div>
+
+  <div class="card">
+    <h2><a href="./relay/">relay <span class="tag">example</span></a></h2>
     <p>an auth design doc and an api spec. two teams used <code>session</code> for different things; the registry records the collision and its resolution. <code>api_key</code> was renamed <code>access_token</code>; the alias keeps old references resolving.</p>
   </div>
 
   <div class="card">
-    <h2><a href="./gambit/">gambit — a card game</a></h2>
+    <h2><a href="./gambit/">gambit <span class="tag">example</span></a></h2>
     <p>a rulebook and its engine. the same machinery on prose-vs-code drift: <code>capture</code> collides between the two, resolved on the rulebook sense.</p>
   </div>
 
