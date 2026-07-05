@@ -38,7 +38,7 @@ jobs:
           cp -r examples/gambit/src _site/gambit/src
           sed -i 's|href="\.\./\.\./|href="|g' _site/gambit/index.html
 
-          # the real-world instance: the fold preprint's claim registry, from its own public repo
+          # the fold preprint's claim registry, from its own public repo
           git clone --depth 1 https://github.com/manifoldcontrol/fold-registry _fold
           python3 _fold/csr/tools/csr.py --root _fold/csr build
           cp _fold/csr/build/CSR.registry.html _site/fold/index.html
