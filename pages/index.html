@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>csr: live registries · manifold control</title>
-<meta name="description" content="three live corpus-semantic registries: a real mathematics preprint's claim table plus two worked examples: sha256-pinned, drift-detected, rebuilt in ci.">
+<title>csr registries · manifold control</title>
+<meta name="description" content="three corpus-semantic registries, sha256-pinned and rebuilt in ci. the flagship is a mathematics preprint's claim table.">
 <link rel="canonical" href="https://manifoldcontrol.com/csr-seed/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="csr: live registries">
-<meta property="og:description" content="documents define, the registry identifies. a real preprint's claim table plus two worked examples: sha256-pinned, drift-detected, rebuilt in ci.">
+<meta property="og:title" content="csr registries">
+<meta property="og:description" content="documents define, the registry identifies. a mathematics preprint's claim table plus two worked examples, sha256-pinned and rebuilt in ci.">
 <meta property="og:url" content="https://manifoldcontrol.com/csr-seed/">
 <meta property="og:image" content="https://manifoldcontrol.com/csr-seed/og.png">
 <meta property="og:site_name" content="manifold control">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="csr: live registries">
-<meta name="twitter:description" content="documents define, the registry identifies. sha256-pinned, drift-detected, rebuilt in ci.">
+<meta name="twitter:title" content="csr registries">
+<meta name="twitter:description" content="documents define, the registry identifies. sha256-pinned and rebuilt in ci.">
 <meta name="twitter:image" content="https://manifoldcontrol.com/csr-seed/og.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2314171a'/%3E%3Crect x='7' y='8' width='3' height='16' fill='%235fa66a'/%3E%3Ctext x='14' y='23' font-family='monospace' font-size='15' fill='%23e8e8e8'%3Ec%3C/text%3E%3C/svg%3E">
 <style>
@@ -88,7 +88,7 @@
     font-size: .68rem; border: 1px solid var(--border); border-radius: 999px;
     padding: .08rem .55rem; color: var(--muted); letter-spacing: .04em;
   }
-  .tag.real { border-color: var(--accent); color: var(--accent); background: var(--tint); }
+  .tag.flagship { border-color: var(--accent); color: var(--accent); background: var(--tint); }
   .card p { margin: 0; color: var(--muted); font-size: .88rem; flex: 1; }
   .chips { display: flex; flex-wrap: wrap; gap: .4rem; }
   .chip { font-size: .72rem; color: var(--fg); background: var(--code-bg); border-radius: 4px; padding: .12rem .5rem; }
@@ -138,18 +138,18 @@
     <h1>documents define.<br>the registry identifies.</h1>
     <p class="lede">a registry layer over a corpus of documents: <b>one symbol, one definition home, one content-hashed identity</b>. edit a pinned source and every dependent claim is flagged in ci until it is re-verified and re-pinned.</p>
     <div class="cta">
-      <a class="btn primary" href="./fold/">browse a real registry →</a>
+      <a class="btn primary" href="./fold/">browse the fold registry →</a>
       <a class="btn" href="https://github.com/manifoldcontrol/csr-seed">source + 60-second walkthrough</a>
     </div>
   </div>
 
-  <section aria-labelledby="live">
+  <section aria-labelledby="registries">
     <div class="wrap">
-      <h2 id="live">three live registries</h2>
-      <p class="section-sub">compiled from source and rendered. each is a browsable index: symbols, definition homes, dependency edges, verification states, and the collisions and aliases the registry resolves.</p>
+      <h2 id="registries">three registries</h2>
+      <p class="section-sub">compiled from source and rendered, each page is the browsable index of one registry.</p>
       <div class="cards">
         <div class="card">
-          <h3><a href="./fold/">fold</a> <span class="tag real">real paper</span></h3>
+          <h3><a href="./fold/">fold</a> <span class="tag flagship">preprint</span></h3>
           <div class="chips"><span class="chip">19 symbols</span><span class="chip">8 proved</span><span class="chip">1 conditional</span><span class="chip">4 open</span></div>
           <p>the claim-status table of a mathematics preprint (v67), maintained as a registry with dependency edges and sha256 pins against the pdf. change a byte of the paper and every affected claim is flagged until re-verified.</p>
           <div class="links"><a href="./fold/">registry →</a> <a href="./fold/paper.pdf">paper (pdf)</a></div>
@@ -171,15 +171,15 @@
   <section aria-labelledby="how">
     <div class="wrap">
       <h2 id="how">how drift detection works</h2>
-      <p class="section-sub">for corpora where documents, code, and ai agents all touch the same vocabulary: research frameworks, spec-driven codebases, long-lived design docs.</p>
+      <p class="section-sub">for corpora where prose and code share a vocabulary that an ai agent also has to navigate.</p>
       <div class="steps">
         <div class="step">
           <h3><span class="n">1</span>register</h3>
-          <p>documents own the prose and the definitions. the registry records each symbol, its one definition home, and its dependency edges.</p>
+          <p>documents own the prose and the definitions. the registry gives each symbol a definition home and tracks what depends on it.</p>
         </div>
         <div class="step">
           <h3><span class="n">2</span>pin</h3>
-          <p>every definition home gets a sha256. the registry compiles to a lockfile, a browsable wiki, a dependency graph, and a validation report with 20+ typed error codes.</p>
+          <p>every definition home gets a sha256, and the build writes the lockfile that every rendered view reads from. validation runs 20+ typed error codes on each compile.</p>
         </div>
         <div class="step">
           <h3><span class="n">3</span>detect</h3>
@@ -190,7 +190,7 @@
 <span class="ps1">$</span> python3 tools/csr.py --root examples/relay/csr build
 <span class="err">CSR004 hash_drift</span>: symbol csr.Auth.session: source changed after hash
 pinning (pinned sha256:6dfd2f.. != current sha256:e42753..)</code></pre>
-      <p class="term-note">this exact check runs in ci on every commit (the demo is real). these pages rebuild from source weekly and on every push.</p>
+      <p class="term-note">this exact check runs in ci on every commit. these pages rebuild from source weekly and on every push.</p>
     </div>
   </section>
 
@@ -225,4 +225,3 @@ pinning (pinned sha256:6dfd2f.. != current sha256:e42753..)</code></pre>
 
 </body>
 </html>
-                        
