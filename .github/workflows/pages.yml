@@ -24,7 +24,7 @@ jobs:
       - name: build all registries and assemble the site
         run: |
           mkdir -p _site/relay _site/gambit _site/fold
-          cp pages/index.html _site/index.html
+          cp pages/* _site/
           touch _site/.nojekyll
 
           # this repo's two worked examples
