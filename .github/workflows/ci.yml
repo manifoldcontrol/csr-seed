@@ -22,7 +22,7 @@ jobs:
           grep -q "Errors: 0, Warnings: 0" examples/relay/csr/build/CSR.validation.txt
           python3 tools/csr.py --root examples/gambit/csr build
           grep -q "Errors: 0, Warnings: 0" examples/gambit/csr/build/CSR.validation.txt
-      - name: drift detection fires (the demo is real)
+      - name: drift detection fires
         run: |
           echo >> examples/relay/docs/auth_design_v1.md
           python3 tools/csr.py --root examples/relay/csr build
