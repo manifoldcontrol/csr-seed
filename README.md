@@ -2,7 +2,7 @@
 
 a corpus semantic registry: documents define, the registry identifies. one symbol, one definition home, one registry identity, with content hashes that make silent definition drift detectable.
 
-**live demo:** [manifoldcontrol.com/csr-seed](https://manifoldcontrol.com/csr-seed/), a mathematics preprint's claim registry plus the two worked examples below, rendered and rebuilt in ci.
+**demo:** [manifoldcontrol.com/csr-seed](https://manifoldcontrol.com/csr-seed/), a mathematics preprint's claim registry plus the two worked examples below, rendered and rebuilt in ci.
 
 **in production:** the same machinery runs a private research corpus of 1,486 symbols across 191 documents, and every edit lands in a hash-chained audit log. [docs/CONCEPTUAL.md](docs/CONCEPTUAL.md) is the design document it runs on.
 
