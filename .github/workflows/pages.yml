@@ -24,20 +24,26 @@ jobs:
       - name: build all registries and assemble the site
         run: |
           mkdir -p _site/relay _site/gambit _site/fold
-          cp pages/* _site/
+          cp pages/index.html _site/index.html
           touch _site/.nojekyll
 
-          # this repo's two worked examples
+          # this repo's two worked examples (ship their source docs so PDF/source buttons resolve)
           python3 tools/csr.py --root examples/relay/csr build
           cp examples/relay/csr/build/CSR.registry.html _site/relay/index.html
+          cp -r examples/relay/docs _site/relay/docs
+          sed -i 's|href="\.\./\.\./|href="|g' _site/relay/index.html
           python3 tools/csr.py --root examples/gambit/csr build
           cp examples/gambit/csr/build/CSR.registry.html _site/gambit/index.html
+          cp -r examples/gambit/docs _site/gambit/docs
+          cp -r examples/gambit/src _site/gambit/src
+          sed -i 's|href="\.\./\.\./|href="|g' _site/gambit/index.html
 
           # the real-world instance: the fold preprint's claim registry, from its own public repo
           git clone --depth 1 https://github.com/manifoldcontrol/fold-registry _fold
           python3 _fold/csr/tools/csr.py --root _fold/csr build
           cp _fold/csr/build/CSR.registry.html _site/fold/index.html
           cp _fold/docs/Fold_Bifurcation_v67.pdf _site/fold/paper.pdf
+          sed -i 's|href="\.\./\.\./docs/Fold_Bifurcation_v67\.pdf"|href="paper.pdf"|g' _site/fold/index.html
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
