@@ -3,52 +3,226 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>csr — live registries</title>
+<title>csr: live registries · manifold control</title>
+<meta name="description" content="three live corpus-semantic registries: a real mathematics preprint's claim table plus two worked examples: sha256-pinned, drift-detected, rebuilt in ci.">
+<link rel="canonical" href="https://manifoldcontrol.com/csr-seed/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="csr: live registries">
+<meta property="og:description" content="documents define, the registry identifies. a real preprint's claim table plus two worked examples: sha256-pinned, drift-detected, rebuilt in ci.">
+<meta property="og:url" content="https://manifoldcontrol.com/csr-seed/">
+<meta property="og:image" content="https://manifoldcontrol.com/csr-seed/og.png">
+<meta property="og:site_name" content="manifold control">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="csr: live registries">
+<meta name="twitter:description" content="documents define, the registry identifies. sha256-pinned, drift-detected, rebuilt in ci.">
+<meta name="twitter:image" content="https://manifoldcontrol.com/csr-seed/og.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2314171a'/%3E%3Crect x='7' y='8' width='3' height='16' fill='%235fa66a'/%3E%3Ctext x='14' y='23' font-family='monospace' font-size='15' fill='%23e8e8e8'%3Ec%3C/text%3E%3C/svg%3E">
 <style>
-  :root { color-scheme: light dark; }
-  body { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-         max-width: 46rem; margin: 3rem auto; padding: 0 1.25rem; line-height: 1.6;
-         background: #0d1117; color: #c9d1d9; }
-  @media (prefers-color-scheme: light) { body { background: #fff; color: #24292f; } }
-  a { color: #58a6ff; text-decoration: none; }
-  @media (prefers-color-scheme: light) { a { color: #0969da; } }
+  :root {
+    --bg: #14171a; --fg: #e8e8e8; --muted: #8a8e96; --border: #2c3038;
+    --code-bg: #1d2025; --card-bg: #1a1d22; --accent: #5fa66a;
+    --accent-fg: #0e1310; --tint: rgba(95,166,106,.10);
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #ffffff; --fg: #1f2328; --muted: #59606a; --border: #d0d7de;
+      --code-bg: #f6f8fa; --card-bg: #fbfcfd; --accent: #2f7d3f;
+      --accent-fg: #ffffff; --tint: rgba(47,125,63,.08);
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    font-size: 15px; line-height: 1.6;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+  .wrap { max-width: 58rem; margin: 0 auto; padding: 0 1.5rem; }
+  a { color: var(--accent); text-decoration: none; }
   a:hover { text-decoration: underline; }
-  h1 { font-size: 1.5rem; font-weight: 500; margin-bottom: .25rem; }
-  .sub { color: #8b949e; margin-top: 0; }
-  .card { border: 1px solid #30363d; border-radius: 8px; padding: 1rem 1.25rem; margin: 1rem 0; }
-  @media (prefers-color-scheme: light) { .card { border-color: #d0d7de; } }
-  .card h2 { font-size: 1.05rem; font-weight: 500; margin: 0 0 .35rem; }
-  .card p { margin: .35rem 0; color: #8b949e; font-size: .92rem; }
-  .tag { font-size: .72rem; color: #8b949e; border: 1px solid #30363d; border-radius: 999px; padding: .05rem .5rem; margin-left: .4rem; }
-  code { background: rgba(110,118,129,.2); padding: .1rem .3rem; border-radius: 4px; font-size: .88rem; }
-  footer { color: #8b949e; font-size: .85rem; margin-top: 2rem; }
+  a:focus-visible, .btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+  code { background: var(--code-bg); padding: .1rem .35rem; border-radius: 4px; font-size: .9em; }
+
+  /* header */
+  header { border-bottom: 1px solid var(--border); }
+  .nav { display: flex; align-items: baseline; gap: 1.25rem; padding: 1.1rem 0; }
+  .brand { color: var(--fg); font-weight: 700; letter-spacing: .02em; }
+  .brand .tick { color: var(--accent); }
+  .brand:hover { text-decoration: none; }
+  .nav .co { color: var(--muted); font-size: .85rem; }
+  .nav-links { margin-left: auto; display: flex; gap: 1.25rem; font-size: .9rem; }
+  .nav-links a { color: var(--muted); }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* hero */
+  .hero { padding: 4.5rem 0 3.5rem; }
+  .eyebrow { color: var(--accent); font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; margin: 0 0 1rem; }
+  h1 { font-size: clamp(1.7rem, 4.5vw, 2.6rem); line-height: 1.2; margin: 0 0 1.25rem; font-weight: 700; letter-spacing: -0.01em; }
+  .lede { color: var(--muted); max-width: 42rem; margin: 0 0 2rem; font-size: 1.02rem; }
+  .lede b { color: var(--fg); font-weight: 600; }
+  .cta { display: flex; flex-wrap: wrap; gap: .75rem; }
+  .btn {
+    display: inline-block; padding: .6rem 1.1rem; border-radius: 6px;
+    border: 1px solid var(--border); color: var(--fg); font-size: .92rem;
+  }
+  .btn:hover { text-decoration: none; border-color: var(--accent); color: var(--accent); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); font-weight: 600; }
+  .btn.primary:hover { filter: brightness(1.08); color: var(--accent-fg); }
+
+  /* sections */
+  section { padding: 2.75rem 0; border-top: 1px solid var(--border); }
+  h2 { font-size: 1.15rem; font-weight: 600; margin: 0 0 .4rem; }
+  .section-sub { color: var(--muted); font-size: .92rem; margin: 0 0 1.75rem; max-width: 44rem; }
+
+  /* registry cards */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(15.5rem, 1fr)); gap: 1rem; }
+  .card {
+    border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem 1.25rem 1.1rem;
+    background: var(--card-bg); display: flex; flex-direction: column; gap: .6rem;
+  }
+  .card:hover { border-color: var(--accent); }
+  .card h3 { margin: 0; font-size: 1rem; font-weight: 600; display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+  .card h3 a { color: var(--fg); }
+  .card h3 a:hover { color: var(--accent); text-decoration: none; }
+  .tag {
+    font-size: .68rem; border: 1px solid var(--border); border-radius: 999px;
+    padding: .08rem .55rem; color: var(--muted); letter-spacing: .04em;
+  }
+  .tag.real { border-color: var(--accent); color: var(--accent); background: var(--tint); }
+  .card p { margin: 0; color: var(--muted); font-size: .88rem; flex: 1; }
+  .chips { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .chip { font-size: .72rem; color: var(--fg); background: var(--code-bg); border-radius: 4px; padding: .12rem .5rem; }
+  .card .links { display: flex; gap: 1rem; font-size: .88rem; margin-top: .2rem; }
+
+  /* how it works */
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+  .step { border-left: 2px solid var(--accent); padding: .1rem 0 .1rem 1rem; }
+  .step h3 { margin: 0 0 .3rem; font-size: .95rem; }
+  .step h3 .n { color: var(--accent); margin-right: .4rem; }
+  .step p { margin: 0; color: var(--muted); font-size: .88rem; }
+  .term {
+    background: var(--code-bg); border: 1px solid var(--border); border-radius: 8px;
+    padding: 1rem 1.25rem; overflow-x: auto; font-size: .85rem; line-height: 1.7;
+  }
+  .term .ps1 { color: var(--accent); user-select: none; }
+  .term .err { color: #e0a458; }
+  @media (prefers-color-scheme: light) { .term .err { color: #9a6700; } }
+  .term-note { color: var(--muted); font-size: .82rem; margin-top: .6rem; }
+
+  /* stack */
+  .stack { display: grid; gap: .35rem; }
+  .stack-row { display: flex; gap: .75rem; flex-wrap: wrap; font-size: .92rem; padding: .45rem 0; border-bottom: 1px dashed var(--border); }
+  .stack-row:last-child { border-bottom: none; }
+  .stack-row .what { color: var(--muted); font-size: .88rem; }
+
+  footer { border-top: 1px solid var(--border); padding: 2rem 0 3rem; color: var(--muted); font-size: .85rem; }
+  footer .wrap { display: flex; flex-direction: column; gap: .5rem; }
 </style>
 </head>
 <body>
-  <h1>csr</h1>
-  <p class="sub">a corpus semantic registry: documents define, the registry identifies, with hash-pinned drift detection.</p>
 
-  <p>three registries, compiled from source and rendered. each is a browsable index: symbols, definition homes, dependency edges, verification states, and the collisions and aliases the registry resolves.</p>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="./"><span class="tick">▎</span>csr</a>
+    <span class="co">by <a href="https://manifoldcontrol.com">manifold control</a></span>
+    <nav class="nav-links" aria-label="external links">
+      <a href="https://github.com/manifoldcontrol/csr-seed">source</a>
+      <a href="https://manifoldcontrol.com">manifoldcontrol.com</a>
+    </nav>
+  </div>
+</header>
 
-  <div class="card">
-    <h2><a href="./fold/">fold <span class="tag">real paper</span></a></h2>
-    <p>the claim-status table of a singular fold model preprint (v67), maintained as a registry: 8 proved results, 1 conditional, 4 open problems, with dependency edges and sha256 pins against the <a href="./fold/paper.pdf">paper</a>. change a byte of the pdf and every affected claim is flagged until re-verified.</p>
+<main>
+  <div class="wrap hero">
+    <p class="eyebrow">corpus semantic registry</p>
+    <h1>documents define.<br>the registry identifies.</h1>
+    <p class="lede">a registry layer over a corpus of documents: <b>one symbol, one definition home, one content-hashed identity</b>. edit a pinned source and every dependent claim is flagged in ci until it is re-verified and re-pinned.</p>
+    <div class="cta">
+      <a class="btn primary" href="./fold/">browse a real registry →</a>
+      <a class="btn" href="https://github.com/manifoldcontrol/csr-seed">source + 60-second walkthrough</a>
+    </div>
   </div>
 
-  <div class="card">
-    <h2><a href="./relay/">relay <span class="tag">example</span></a></h2>
-    <p>an auth design doc and an api spec. two teams used <code>session</code> for different things; the registry records the collision and its resolution. <code>api_key</code> was renamed <code>access_token</code>; the alias keeps old references resolving.</p>
+  <section aria-labelledby="live">
+    <div class="wrap">
+      <h2 id="live">three live registries</h2>
+      <p class="section-sub">compiled from source and rendered. each is a browsable index: symbols, definition homes, dependency edges, verification states, and the collisions and aliases the registry resolves.</p>
+      <div class="cards">
+        <div class="card">
+          <h3><a href="./fold/">fold</a> <span class="tag real">real paper</span></h3>
+          <div class="chips"><span class="chip">19 symbols</span><span class="chip">8 proved</span><span class="chip">1 conditional</span><span class="chip">4 open</span></div>
+          <p>the claim-status table of a mathematics preprint (v67), maintained as a registry with dependency edges and sha256 pins against the pdf. change a byte of the paper and every affected claim is flagged until re-verified.</p>
+          <div class="links"><a href="./fold/">registry →</a> <a href="./fold/paper.pdf">paper (pdf)</a></div>
+        </div>
+        <div class="card">
+          <h3><a href="./relay/">relay</a> <span class="tag">worked example</span></h3>
+          <p>an auth design doc and an api spec. two teams used <code>session</code> for different things; the registry records the collision and its resolution. <code>api_key</code> was renamed <code>access_token</code>; the alias keeps old references resolving.</p>
+          <div class="links"><a href="./relay/">registry →</a></div>
+        </div>
+        <div class="card">
+          <h3><a href="./gambit/">gambit</a> <span class="tag">worked example</span></h3>
+          <p>a card-game rulebook vs. its engine: the same machinery on prose-vs-code drift. <code>capture</code> collides between the two; the registry resolves it on the rulebook sense.</p>
+          <div class="links"><a href="./gambit/">registry →</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="how">
+    <div class="wrap">
+      <h2 id="how">how drift detection works</h2>
+      <p class="section-sub">for corpora where documents, code, and ai agents all touch the same vocabulary: research frameworks, spec-driven codebases, long-lived design docs.</p>
+      <div class="steps">
+        <div class="step">
+          <h3><span class="n">1</span>register</h3>
+          <p>documents own the prose and the definitions. the registry records each symbol, its one definition home, and its dependency edges.</p>
+        </div>
+        <div class="step">
+          <h3><span class="n">2</span>pin</h3>
+          <p>every definition home gets a sha256. the registry compiles to a lockfile, a browsable wiki, a dependency graph, and a validation report with 20+ typed error codes.</p>
+        </div>
+        <div class="step">
+          <h3><span class="n">3</span>detect</h3>
+          <p>any change to a pinned source flags every dependent symbol with a <code>CSR004</code> drift diagnostic until it is re-verified and re-pinned.</p>
+        </div>
+      </div>
+      <pre class="term"><code><span class="ps1">$</span> echo >> examples/relay/docs/auth_design_v1.md
+<span class="ps1">$</span> python3 tools/csr.py --root examples/relay/csr build
+<span class="err">CSR004 hash_drift</span>: symbol csr.Auth.session: source changed after hash
+pinning (pinned sha256:6dfd2f.. != current sha256:e42753..)</code></pre>
+      <p class="term-note">this exact check runs in ci on every commit (the demo is real). these pages rebuild from source weekly and on every push.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="stack">
+    <div class="wrap">
+      <h2 id="stack">part of a verification stack</h2>
+      <p class="section-sub">csr handles identity. its siblings handle provenance and proof-term evidence. each is usable on its own.</p>
+      <div class="stack">
+        <div class="stack-row">
+          <a href="https://github.com/manifoldcontrol/verification-events">verification-events</a>
+          <span class="what">content-hashed provenance events for every verification act (schema + stdlib-only python)</span>
+        </div>
+        <div class="stack-row">
+          <a href="https://github.com/manifoldcontrol/lean-introspect">lean-introspect</a>
+          <span class="what">lean 4 <code>#introspect</code>: proof-term dag + leakage report (sorry, mvars, dependency surface) as json</span>
+        </div>
+        <div class="stack-row">
+          <a href="https://github.com/manifoldcontrol/fold-registry">fold-registry</a>
+          <span class="what">the fold preprint's claim registry, the source behind the fold pages here</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><a href="https://manifoldcontrol.com">manifold control</a> · verification architecture for organizations deploying ai · charlottesville, va</div>
+    <div>source: <a href="https://github.com/manifoldcontrol/csr-seed">github.com/manifoldcontrol/csr-seed</a> · mit licensed</div>
   </div>
+</footer>
 
-  <div class="card">
-    <h2><a href="./gambit/">gambit <span class="tag">example</span></a></h2>
-    <p>a rulebook and its engine. the same machinery on prose-vs-code drift: <code>capture</code> collides between the two, resolved on the rulebook sense.</p>
-  </div>
-
-  <p>the point these pages can't show statically: edit a source document and rebuild, and every symbol whose definition home changed is flagged with a <code>CSR004</code> drift diagnostic until re-verified and re-pinned. that check runs in ci on every commit.</p>
-
-  <footer>
-    source and the 60-second walkthrough: <a href="https://github.com/manifoldcontrol/csr-seed">github.com/manifoldcontrol/csr-seed</a>
-  </footer>
 </body>
 </html>
+                        
