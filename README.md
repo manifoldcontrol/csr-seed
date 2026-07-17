@@ -4,7 +4,7 @@ a corpus semantic registry: documents define, the registry identifies. one symbo
 
 **demo:** [manifoldcontrol.com/csr-seed](https://manifoldcontrol.com/csr-seed/), a mathematics preprint's claim registry plus the two worked examples below, rendered and rebuilt in ci.
 
-**in production:** the same machinery runs a private research corpus of 1,486 symbols across 191 documents, and every edit lands in a hash-chained audit log. [docs/CONCEPTUAL.md](docs/CONCEPTUAL.md) is the design document it runs on.
+**in production:** the same machinery runs the private research corpus behind the fold paper, and every registry edit lands in a hash-chained audit log. [docs/CONCEPTUAL.md](docs/CONCEPTUAL.md) is the design document it runs on.
 
 built for corpora where prose and code share a vocabulary that an ai agent also has to navigate. the compiler turns the registry into a lockfile plus the rendered views, and validates every build against 20+ typed error codes.
 

@@ -38,12 +38,17 @@ jobs:
           cp -r examples/gambit/src _site/gambit/src
           sed -i 's|href="\.\./\.\./|href="|g' _site/gambit/index.html
 
-          # the fold preprint's claim registry, from its own public repo
+          # the fold preprint's claim registry, from its own public repo.
+          # The version is NOT hardcoded here: fold-registry pins exactly one paper, and
+          # hardcoding a filename silently breaks this build the day that pin moves.
           git clone --depth 1 https://github.com/manifoldcontrol/fold-registry _fold
           python3 _fold/csr/tools/csr.py --root _fold/csr build
           cp _fold/csr/build/CSR.registry.html _site/fold/index.html
-          cp _fold/docs/Fold_Bifurcation_v67.pdf _site/fold/paper.pdf
-          sed -i 's|href="\.\./\.\./docs/Fold_Bifurcation_v67\.pdf"|href="paper.pdf"|g' _site/fold/index.html
+          PDF=$(ls _fold/docs/Fold_Bifurcation_v*.pdf)
+          test "$(echo "$PDF" | wc -l)" -eq 1 || { echo "expected exactly one pinned paper, got:"; echo "$PDF"; exit 1; }
+          cp "$PDF" _site/fold/paper.pdf
+          sed -i "s|href=\"../../docs/$(basename "$PDF")\"|href=\"paper.pdf\"|g" _site/fold/index.html
+          grep -q 'href="paper.pdf"' _site/fold/index.html || { echo "paper link did not rewrite"; exit 1; }
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
